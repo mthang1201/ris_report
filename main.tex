@@ -48,30 +48,33 @@
 }
 
 \chapter*{Lời cam đoan}
-Em xin cam đoan: Báo cáo thu hoạch thực tập Viettel Digital Talent 2025 với đề tài “Áp dụng Machine Learning để tối ưu thuật toán ABR cho Shaka Player trên nền tảng Web” này là của em. Những gì em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu cá nhân em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
+Nhóm em xin cam đoan: Báo cáo nghiên cứu khoa học với đề tài “Mô phỏng điều hướng lưu lượng trong O-RAN với xApp dùng Deep Reinforcement Learning” này là của em. Những gì em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu cá nhân em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
 
 \vspace{2cm} % nếu cần tạo khoảng cách từ nội dung phía trên
 \noindent
 \hfill
 \begin{minipage}{0.4\textwidth}
     \centering
-    \textbf{Thực tập sinh}\\[1cm] % khoảng trống cho chữ ký
-    Bùi Minh Thắng
+    \textbf{Sinh viên}\\[1cm] % khoảng trống cho chữ ký
+    Bùi Minh Thắng\\
+    Nguyễn Vũ Minh\\
+    Ma Đức Minh\\
+    Nguyễn Hoàng Tùng Dương\\
 \end{minipage}
 
 \chapter*{Lời cảm ơn}
-Lời đầu tiên, em xixin được gửi lời cảm ơn chân thành tới Khoa Công nghệ Thông tin – Trường Đại học Công nghệ – Đại học Quốc gia Hà Nội đã tạo điều kiện thuận lợi để em được học tập, nghiên cứu và thực hiện đề tài này.
+Lời đầu tiên, em xin được gửi lời cảm ơn chân thành tới Khoa Công nghệ Thông tin – Trường Đại học Công nghệ – Đại học Quốc gia Hà Nội đã tạo điều kiện thuận lợi để em được học tập, nghiên cứu và thực hiện đề tài này.
 
 Em xin bày tỏ lòng biết ơn sâu sắc tới thầy Nguyễn Ngọc Tân và thầy Nguyễn Thái Dương đã tận tình hướng dẫn, hỗ trợ em trong suốt quá trình nghiên cứu và triển khai đề tài.
 
 Bên cạnh đó, em xin được bày tỏ lòng biết ơn tới các thầy cô trong khoa đã tận tâm giảng dạy và trang bị cho em những kiến thức quý báu trong suốt quá trình học tập tại trường.
 
-Cuối cùng, em xin chúc các thầy cô, anh chị luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong cuộc sống.
+Cuối cùng, em xin chúc các thầy cô, các bạn luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong cuộc sống.
 
 \chapter*{Tóm tắt}
-Trong bối cảnh chất lượng trải nghiệm người dùng (QoE) ngày càng đóng vai trò then chốt đối với các nền tảng phát video trực tuyến, các thuật toán Adaptive Bitrate (ABR) mặc định trong các trình phát như Shaka Player thường bộc lộ nhiều hạn chế khi phải thích ứng với điều kiện mạng thay đổi liên tục. Các thuật toán này chủ yếu dựa trên các quy tắc cố định, thiếu khả năng cân bằng linh hoạt giữa nhiều yếu tố như độ mượt, độ trễ và mức sử dụng băng thông. Do đó, việc ứng dụng các phương pháp tối ưu hóa hiện đại như học máy hoặc mô hình chi phí trọng số trở nên cần thiết. Trong báo cáo này, dự án trình bày tổng quan về Shaka Player — một thư viện JavaScript mã nguồn mở do Google phát triển, hỗ trợ DASH và HLS — cùng với nguyên lý hoạt động của cơ chế ABR. Sau đó sẽ điểm qua một số thuật toán ABR nổi bật hiện nay như BOLA, MPC và Reinforcement Learning-based ABR, đồng thời phân tích lý do lựa chọn thuật toán WISH (Weighted-Sum Model for HTTP Adaptive Streaming) để giải quyết bài toán tối ưu chất lượng truyền phát. WISH là một mô hình tối ưu dựa trên hàm tổng trọng số, trong đó nhiều yếu tố ảnh hưởng đến QoE như bitrate, độ mượt, số lần gián đoạn và độ trễ được kết hợp với các trọng số linh hoạt nhằm đưa ra quyết định lựa chọn bitrate tại từng thời điểm sao cho tổng thể trải nghiệm người dùng được tối ưu hóa. Dự án hiện thực hóa thuật toán WISH trong một ứng dụng phát video trực tuyến sử dụng React.js cho frontend và Shaka Player cho trình phát video phía client. Trong quá trình triển khai, dự án cố gắng đưa mô hình WISH tích hợp vào hệ thống logic ABR của Shaka Player nhằm thay thế thuật toán mặc định nhưng chưa đạt được thành tựu. Báo cáo kết luận rằng việc áp dụng mô hình WISH trong kiến trúc dựa trên Shaka Player là một hướng tiếp cận khả thi, nhưng cần được nghiên cứu thêm.
+Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp trong kiến trúc Open RAN, tập trung vào việc điều hướng lưu lượng mạng sử dụng Deep Reinforcement Learning (DRL). Chúng tôi đã xây dựng một xApp để tối ưu hóa việc phân phối lưu lượng mạng trong môi trường O-RAN, sử dụng mô hình DRL để cải thiện hiệu suất mạng. Bằng cách sử dụng mô phỏng ns-3, chúng tôi đã kiểm tra hiệu quả của xApp trong các tình huống thực tế, cho thấy khả năng cải thiện đáng kể trong việc quản lý lưu lượng và tối ưu hóa tài nguyên mạng. Báo cáo cũng cung cấp hướng dẫn chi tiết về cách phát triển xApp và tích hợp nó vào hệ thống O-RAN.
 
-\textbf{Từ khoá:} Machine Learning, ABR, QoE, Shaka Player, WISH, Reinforcement Learning-based ABR, web, mô hình tổng trọng số, phát video trực tuyến, DASH.
+\textbf{Từ khoá:} Open RAN architecture, O-RAN RIC, xApp development, O-RAN use cases, ns-3 O-RAN simulation, DRL for traffic steering, RAN Intelligent Controller.
 
 \tableofcontents
 
