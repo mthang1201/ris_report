@@ -5,6 +5,6 @@
 *.fls
 *.fdb_latexmk
 *.synctex.gz
-*.pdf
+# *.pdf
 .vscode/
 .DS_Store

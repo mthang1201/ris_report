@@ -60,21 +60,13 @@ Em xin cam đoan: Báo cáo thu hoạch thực tập Viettel Digital Talent 2025
 \end{minipage}
 
 \chapter*{Lời cảm ơn}
-Em xin bày tỏ lòng biết ơn chân thành tới anh Lê Hoàng và anh Nguyễn Đức Vượng đã tận tình hướng dẫn, hỗ trợ em trong suốt quá trình nghiên cứu và thực hiện đề tài này.
+Lời đầu tiên, em xixin được gửi lời cảm ơn chân thành tới Khoa Công nghệ Thông tin – Trường Đại học Công nghệ – Đại học Quốc gia Hà Nội đã tạo điều kiện thuận lợi để em được học tập, nghiên cứu và thực hiện đề tài này.
 
-Em cũng xin gửi lời cảm ơn sâu sắc tới các anh KOLs và mentor từ Viettel đã nhiệt tình giảng dạy, chia sẻ kiến thức và kinh nghiệm thực tiễn về Software Engineering trong suốt hai tháng vừa qua, giúp em có thêm nền tảng chuyên môn vững chắc để hoàn thành đề tài một cách tốt nhất.
+Em xin bày tỏ lòng biết ơn sâu sắc tới thầy Nguyễn Ngọc Tân và thầy Nguyễn Thái Dương đã tận tình hướng dẫn, hỗ trợ em trong suốt quá trình nghiên cứu và triển khai đề tài.
 
-Cuối cùng, em xin chúc các anh, các chị luôn dồi dào sức khỏe, thành công và hạnh phúc trong cuộc sống.
+Bên cạnh đó, em xin được bày tỏ lòng biết ơn tới các thầy cô trong khoa đã tận tâm giảng dạy và trang bị cho em những kiến thức quý báu trong suốt quá trình học tập tại trường.
 
-% Lời đầu tiên, em xin được gửi lời cảm ơn chân thành tới Khoa Công nghệ Thông tin – Trường Đại học Công nghệ – Đại học Quốc gia Hà Nội đã tạo điều kiện thuận lợi để em được học tập, nghiên cứu và thực hiện đề tài này.
-
-% Em xin bày tỏ lòng biết ơn sâu sắc tới anh Lê Hoàng và anh Nguyễn Đức Vượng đã tận tình hướng dẫn, hỗ trợ em trong suốt quá trình nghiên cứu và triển khai đề tài.
-
-% Em cũng xin cảm ơn các anh KOLs và mentor từ Viettel đã nhiệt tình giảng dạy, chia sẻ kiến thức và kinh nghiệm thực tiễn về Software Engineering trong suốt hai tháng vừa qua, giúp em có thêm nền tảng chuyên môn vững chắc để hoàn thành đề tài một cách tốt nhất.
-
-% Bên cạnh đó, em xin được bày tỏ lòng biết ơn tới các thầy cô trong khoa đã tận tâm giảng dạy và trang bị cho em những kiến thức quý báu trong suốt quá trình học tập tại trường.
-
-% Cuối cùng, em xin chúc các thầy cô, anh chị luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong cuộc sống.
+Cuối cùng, em xin chúc các thầy cô, anh chị luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong cuộc sống.
 
 \chapter*{Tóm tắt}
 Trong bối cảnh chất lượng trải nghiệm người dùng (QoE) ngày càng đóng vai trò then chốt đối với các nền tảng phát video trực tuyến, các thuật toán Adaptive Bitrate (ABR) mặc định trong các trình phát như Shaka Player thường bộc lộ nhiều hạn chế khi phải thích ứng với điều kiện mạng thay đổi liên tục. Các thuật toán này chủ yếu dựa trên các quy tắc cố định, thiếu khả năng cân bằng linh hoạt giữa nhiều yếu tố như độ mượt, độ trễ và mức sử dụng băng thông. Do đó, việc ứng dụng các phương pháp tối ưu hóa hiện đại như học máy hoặc mô hình chi phí trọng số trở nên cần thiết. Trong báo cáo này, dự án trình bày tổng quan về Shaka Player — một thư viện JavaScript mã nguồn mở do Google phát triển, hỗ trợ DASH và HLS — cùng với nguyên lý hoạt động của cơ chế ABR. Sau đó sẽ điểm qua một số thuật toán ABR nổi bật hiện nay như BOLA, MPC và Reinforcement Learning-based ABR, đồng thời phân tích lý do lựa chọn thuật toán WISH (Weighted-Sum Model for HTTP Adaptive Streaming) để giải quyết bài toán tối ưu chất lượng truyền phát. WISH là một mô hình tối ưu dựa trên hàm tổng trọng số, trong đó nhiều yếu tố ảnh hưởng đến QoE như bitrate, độ mượt, số lần gián đoạn và độ trễ được kết hợp với các trọng số linh hoạt nhằm đưa ra quyết định lựa chọn bitrate tại từng thời điểm sao cho tổng thể trải nghiệm người dùng được tối ưu hóa. Dự án hiện thực hóa thuật toán WISH trong một ứng dụng phát video trực tuyến sử dụng React.js cho frontend và Shaka Player cho trình phát video phía client. Trong quá trình triển khai, dự án cố gắng đưa mô hình WISH tích hợp vào hệ thống logic ABR của Shaka Player nhằm thay thế thuật toán mặc định nhưng chưa đạt được thành tựu. Báo cáo kết luận rằng việc áp dụng mô hình WISH trong kiến trúc dựa trên Shaka Player là một hướng tiếp cận khả thi, nhưng cần được nghiên cứu thêm.
