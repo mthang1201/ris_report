@@ -7,6 +7,7 @@
 \usepackage{lipsum}
 \usepackage{fancyhdr}
 \usepackage{indentfirst}
+% \setlength{\parindent}{15pt}
 \pagestyle{fancy}
 \fancyhead{}
 \fancyhead[L]{\leftmark}
@@ -24,8 +25,8 @@
 \usepackage{courier}
 
 
-% \usepackage{biblatex}
-% \addbibresource{references.bib}
+\usepackage{biblatex}
+\addbibresource{refs.bib}
 
 \title{
     {Thesis Title}\\
@@ -48,7 +49,7 @@
 }
 
 \chapter*{Lời cam đoan}
-Nhóm em xin cam đoan: Báo cáo nghiên cứu khoa học với đề tài “Mô phỏng điều hướng lưu lượng trong O-RAN với xApp dùng Deep Reinforcement Learning” này là của em. Những gì em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu cá nhân em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
+Nhóm em xin cam đoan: Báo cáo nghiên cứu khoa học với đề tài “Mô phỏng điều hướng lưu lượng trong O-RAN với xApp dùng Deep Reinforcement Learning” này là của nhóm em. Những gì nhóm em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu tập thể nhóm em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, nhóm em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
 
 \vspace{2cm} % nếu cần tạo khoảng cách từ nội dung phía trên
 \noindent
@@ -89,7 +90,9 @@ Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp 
 % \input{chapters/chapter01}
 
 \chapter{Kiến thức cơ sở}
-% \input{chapters/chapter02}
+\input{chapters/chapter02.1}
+\input{chapters/chapter02.2}
+\input{chapters/chapter02.3}
 
 \chapter{Phương pháp tối ưu hoá ABR}
 % \input{chapters/chapter03}
@@ -100,9 +103,9 @@ Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp 
 \chapter{Kết luận}
 % \input{chapters/chapter05}
 
-\chapter*{Tài liệu tham khảo}
+% \chapter*{Tài liệu tham khảo}
 % \input{chapters/references}
 
-% \printbibliography[heading=bibintoc]
+\printbibliography[heading=bibintoc]
 
 \end{document}

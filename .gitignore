@@ -8,3 +8,7 @@
 # *.pdf
 .vscode/
 .DS_Store
+main.bbl
+main.bcf
+main.blg
+main.run.xml
