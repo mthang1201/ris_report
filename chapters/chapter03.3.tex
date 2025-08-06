@@ -1,9 +1,11 @@
-\section{Triển khai ứng dụng DRL (xApp)}
+\section{Mô hình hàng đợi động và độ trễ offload}
 
-Nhóm tiến hành triển khai một ứng dụng DRL (Deep Reinforcement Learning) mẫu dưới dạng xApp, cụ thể sử dụng thuật toán DQN (Deep Q-Network) để tối ưu hóa cân bằng tải giữa các trạm phát gốc. Các bước gồm:
+Như đã mô tả, hệ thống MEC động có RIS được mô hình bằng hai loại hàng đợi: hàng đợi truyền tại UE và hàng đợi xử lý tại ES. Mục tiêu thường gặp là duy trì độ trễ trung bình hoặc xác suất trễ dưới một ngưỡng yêu cầu. Hãy xét một UE điển hình: tốc độ sinh công việc trung bình là $\lambda$ (bit/s), dung lượng kênh offload thay đổi theo cấu hình RIS và phân bổ tài nguyên mỗi slot. Nếu không tính overhead, công suất kênh UL của UE phụ thuộc vào SNR nhận tại AP, theo công thức Shannon: $R = B_k \log_2(1 + \text{SNR})$ bit/s/Hz (với SNR do kênh trực tiếp + phản xạ cộng lại)
+\cite{ris_latency}
+. Tuy nhiên, do có overhead, thời gian thực sự dành cho truyền data trong mỗi slot chỉ là $T-\tau$. Nếu $\tau$ quá lớn, dù kênh có dung lượng cao, UE cũng chỉ truyền được ít dữ liệu do thiếu thời gian. Ngược lại, nếu $\tau$ quá nhỏ (ít điều khiển), kênh có thể không tối ưu hoặc nhiều lỗi, làm giảm thông lượng thực tế. Bài toán điều khiển MEC/RIS do đó đòi hỏi tối ưu $\tau$ và các quyết định điều khiển để vừa đảm bảo tốc độ xử lý kịp đầu vào, vừa không lãng phí thời gian. 
 
-\begin{itemize}
-    \item Xây dựng hoặc sử dụng lại module DQN agent mẫu có sẵn trong thư mục mẫu của RIMEDO-TS.
-    \item Đăng ký và kích hoạt xApp trên nền tảng Near-RT RIC trong mô phỏng.
-    \item Cấu hình các tham số huấn luyện và kiểm thử của thuật toán DQN, bao gồm số lượng episodes, learning rate, discount factor, và exploration-exploitation parameters.
-\end{itemize}
+
+
+Độ trễ mà UE cảm nhận bao gồm trễ xếp hàng tại UE, trễ truyền qua kênh, và trễ xử lý tại ES. Việc RIS tăng tốc kênh chủ yếu giảm phần trễ truyền. Nhưng nếu overhead điều khiển làm giảm thời gian truyền hoặc gây lỗi, độ trễ có thể tăng lại. Do đó, khi thiết kế giao thức, ta phải tích hợp overhead điều khiển vào tính toán trễ. Công thức (7) trong bài báo gốc cho độ trễ trung bình $D_k$ của UE $k$ liên hệ với hàng đợi tổng và tốc độ tới $\lambda_k$
+\cite{ris_latency}
+. Chi tiết phức tạp nhưng ý nghĩa: để $D_k$ nhỏ, phải có $\text{E}[X_k] \approx \lambda_k$ (tốc độ xử lý >= tốc độ sinh việc) và biến động hàng đợi thấp – tức system phải được điều khiển tối ưu và đủ tài nguyên.

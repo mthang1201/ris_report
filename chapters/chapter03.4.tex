@@ -1,13 +1,44 @@
-\section{Kết quả và đánh giá thực nghiệm}
+\section{Mô hình tiêu thụ năng lượng}
 
-Sau khi triển khai và chạy mô phỏng, nhóm thu thập các chỉ số đánh giá hiệu năng của hệ thống mạng như:
+Tiêu thụ năng lượng trong hệ MEC/RIS gồm nhiều thành phần: năng lượng do UE phát lên (truyền dữ liệu và pilot), năng lượng do AP phát tín hiệu điều khiển và vận hành mạch thu, năng lượng do ES tính toán và RIS hoạt động. Bài báo gốc sử dụng mô hình tổng năng lượng tiêu thụ mỗi slot là tổng trọng số của năng lượng tiêu thụ phía mạng (AP, ES, RIS) và phía người dùng (UE) :
 
 \begin{itemize}
-    \item Thông lượng mạng trung bình của người dùng.
-    \item Tỷ lệ tải cân bằng giữa các gNB.
-    \item Tỷ lệ chuyển giao (handover) thành công.
-    \item Hiệu suất thuật toán DRL (độ hội tụ, reward trung bình mỗi episode).
+    \item $E^\text{ES}(t)$: Năng lượng ES tiêu thụ trong slot $t$ gồm hai phần: năng lượng tính toán xử lý dữ liệu và năng lượng cho các hoạt động điều khiển liên quan. Theo mô hình CPU CMOS, năng lượng tính toán tỷ lệ với hệ số chuyển mạch $C$ của CPU và bình phương tốc độ xung nhịp $f$ (tần số CPU)
+. Nếu ES dùng tần số $f_k(t)$ để xử lý tác vụ UE $k$ (chu kỳ CPU/giây) thì năng lượng tính cho UE $k$ là $C [f_k(t)]^2$. Tổng cho tất cả UE và thêm phần năng lượng thuật toán RA (chạy tại ES) sẽ cho $E^\text{ES}$
+\cite{ris_latency}
+. Tác giả định nghĩa thêm đại lượng $E^\text{ES}_\text{ctl}$ là năng lượng ES tiêu tốn cho phần điều khiển (chủ yếu là chạy thuật toán RA).
+    \item $E^\text{UE}(t)$: Năng lượng tiêu thụ của UE $k$ gồm năng lượng phát dữ liệu và năng lượng cho các tín hiệu điều khiển (pilot, gói điều khiển). Giả sử công suất phát dữ liệu của UE $k$ là $P^\text{UL}k$ trong thời gian payload $(T-\tau)$, năng lượng truyền data là $P^\text{UL}k (T-\tau)$. Còn trong phần điều khiển $\tau$, UE phát pilot và gói điều khiển (như INI-U). Nếu công suất phát trung bình cho control là $P^\text{ctl}\text{UE}$, và pilot kéo dài một khoảng nhất định (ví dụ $\tau\text{CE}$) thì năng lượng control của UE khoảng $P^\text{ctl}\text{UE} \cdot \tau\text{ctl}$
+
+. Mô hình trong bài báo biểu diễn gọn: $E^\text{UE}_k = P^\text{UL}_k (T-\tau) + E^\text{UE,ctl}k$
+\cite{ris_latency}
+, với $E^\text{UE,ctl}k = P^\text{ctl}\text{UE} \cdot \tau\text{ctl}$.
+    \item $E^\text{AP}(t)$: AP chủ yếu tiêu thụ năng lượng cho việc phát tín hiệu điều khiển DL đến UE và RIS. Vì truyền dữ liệu UL nên AP hầu như không tốn năng lượng cho data (ngoại trừ mạch thu). Tại phần điều khiển, AP phát các gói ACK, lệnh SET-U tới $K$ UE và các gói INI-R, SET-R tới RIS. Nếu công suất phát điều khiển của AP là $P^\text{ctl}\text{AP}$, trong thời gian $\tau\text{ctl}$ AP phát tổng cộng một số gói, năng lượng khoảng $E^\text{AP} = P^\text{ctl}\text{AP} \cdot \tau\text{ctl}$ (có thể tính chi tiết dựa trên số gói và độ dài gói)
+    \item $E^\text{RIS}(t)$: RIS thụ động lý tưởng không tiêu thụ năng lượng để phản xạ (chỉ một ít cho mạch điều khiển), nhưng RIS thực tế có thể tiêu thụ một phần nhỏ để duy trì bias diode, thu nhận lệnh, chuyển pha. Với RIS chủ động, mỗi phần tử tiêu tốn công suất đáng kể (tùy mức khuếch đại). Gọi $P_\text{ele}$ là công suất tiêu tán trên mỗi phần tử khi hoạt động (phản xạ)
+. Nếu trong slot, RIS hoạt động (phản xạ) trong cả khung (đối với data) và toàn bộ $N$ phần tử đều bật, thì năng lượng cho RIS là $N P_\text{ele} T$. Tuy nhiên, thường trong pha điều khiển RIS có thể chuyển cấu hình “phát rộng” hay tắt bớt phần tử. Bài báo gốc giả định tất cả phần tử RIS “kích hoạt” (active state) trong suốt quá trình ước lượng kênh để hỗ trợ tín hiệu, do đó trong $\tau_\text{CE}$ tiêu thụ $N P_\text{ele} \tau_\text{CE}$
+. Phần năng lượng điều khiển RIS $E^\text{RIS}_\text{ctl}$ còn bao gồm năng lượng RISC (bộ điều khiển RIS) xử lý lệnh.
+
 \end{itemize}
 
+Tổng hợp lại, năng lượng toàn hệ mỗi slot $E_\text{total}(t)$ có thể viết: 
+\begin{equation}\label{eq:Etot_sigma}
+E_{\sigma}^{\mathrm{tot}}(t)
+\;=\;
+\sigma \sum_{k \in \mathcal{K}} E_{k}(t)
+\;+\;
+\bigl(1 - \sigma\bigr)\bigl(E_{e}(t) + E_{a}(t) + E_{r}(t)\bigr).
+\end{equation}
+với $0 \le w \le 1$ là tham số trọng số cho phép đánh đổi giữa tiêu thụ phía UE và tiêu thụ phía mạng
+. Chẳng hạn, $w=1$ nghĩa là ta chỉ quan tâm giảm năng lượng UE (chiến lược user-centric), $w=0$ là chỉ quan tâm năng lượng mạng (network-centric), còn $w=0.5$ cân bằng cả hai bên.
 
-Các kết quả mô phỏng ban đầu cho thấy rõ hiệu quả của việc sử dụng kiến trúc Open RAN kết hợp với các thuật toán DRL thông minh trong việc cải thiện hiệu năng hệ thống mạng vô tuyến, khẳng định tính khả thi và hiệu quả của phương pháp này trong việc quản lý tài nguyên và cân bằng tải trong mạng viễn thông tương lai.
+
+Phần khác biệt của mô hình năng lượng so với nghiên cứu MEC trước là bao gồm cả năng lượng cho hoạt động điều khiển (CE, RA, signaling) ở mỗi thành phần
+ar5iv.labs.arxiv.org
+. Điều này quan trọng vì nếu overhead quá lớn, năng lượng tiết kiệm được nhờ tối ưu RIS có thể bị bù trừ bởi năng lượng tiêu hao cho overhead. Các công thức (9)-(12) trong bài báo gốc lần lượt chi tiết các $E^\text{ES}$, $E^\text{UE}$, $E^\text{AP}$, $E^\text{RIS}$ nêu trên
+\cite{ris_latency}
+. Trong đó:
+\begin{itemize}
+    \item (9) $E^\text{ES} = \sum_k C [f_k]^2 + E^\text{ES}_\text{ctl}$
+    \item (10) $E^\text{UE}_k = P^\text{UL}_k (T-\tau) + E^\text{UE,ctl}_k$
+    \item (11) $E^\text{AP} = P^\text{ctl}\text{AP} \cdot \tau\text{ctl}$ (tổng gộp)
+    \item (12) $E^\text{RIS} = \sum_{n=1}^N s_n P_\text{ele} + E^\text{RIS}_\text{ctl}$, với $s_n \in{0,1}$ là trạng thái kích hoạt phần tử thứ $n$
+\end{itemize}

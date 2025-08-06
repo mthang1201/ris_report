@@ -1,0 +1,11 @@
+Báo cáo đã trình bày một cái nhìn toàn diện về các khía cạnh điều khiển trong hệ thống MEC được hỗ trợ bởi RIS, đặc biệt hướng tới ứng dụng yêu cầu độ trễ nghiêm ngặt. Từ việc phân tích mô hình, chúng tôi nhấn mạnh rằng bên cạnh những lợi ích rõ rệt do RIS mang lại (cải thiện chất lượng kênh, tăng tốc độ offload, giảm trễ truyền), thì chi phí và độ phức tạp của việc điều khiển RIS không thể bỏ qua trong thiết kế hệ thống :
+
+\begin{itemize}
+    \item Chi phí năng lượng: Việc sử dụng RIS không phải miễn phí về năng lượng – khi xem xét toàn hệ, năng lượng tiêu tốn bởi các quy trình điều khiển (phát pilot, xử lý thuật toán, tín hiệu điều khiển) và bởi bản thân thiết bị RIS (đặc biệt nếu là RIS chủ động) đóng góp đáng kể  . Một thiết kế hiệu quả cần cân bằng bài toán năng lượng giữa phía người dùng và phía mạng, ví dụ thông qua tham số trọng số $w$ trong hàm mục tiêu .
+    \item Độ tin cậy của điều khiển: Chúng tôi đặc biệt lưu ý rằng kênh điều khiển phải được đảm bảo độ tin cậy cao trong các hệ thống MEC/RIS. Các lỗi trong ước lượng kênh và mất mát tín hiệu điều khiển (như lệnh cấu hình RIS, thông tin hàng đợi UE) đều có thể dẫn đến suy giảm nghiêm trọng chất lượng dịch vụ  . Do đó, bên cạnh việc tối ưu hiệu năng trung bình, hệ thống cần cơ chế dự phòng và thiết kế giao thức để chịu lỗi (fault-tolerant) trước các trục trặc control, nhằm giữ độ trễ trong giới hạn dù trong tình huống xấu.
+    \item Thành phần overhead thời gian: Mỗi chu kỳ offload phải hy sinh một phần thời gian cho việc ước lượng kênh, tính toán tối ưu tài nguyên và trao đổi tín hiệu điều khiển. Tỷ lệ overhead này nếu không được tính tối ưu có thể lấn át lợi ích từ RIS, làm tăng độ trễ thay vì giảm  . Kết quả phân tích và mô phỏng cho thấy tồn tại một điểm cân bằng tối ưu về overhead giúp tối ưu hóa hiệu năng-tổng thể (thông lượng, năng lượng, trễ).
+\end{itemize}
+
+
+
+Tóm lại, việc tích hợp RIS vào MEC không chỉ là vấn đề tối ưu vật lý truyền dẫn, mà còn là một bài toán điều khiển liên tầng phức tạp, đòi hỏi cách tiếp cận toàn diện từ tầng vật lý đến tầng mạng. Những hiểu biết về overhead thời gian, chi phí năng lượng và độ tin cậy trình bày trong báo cáo này hy vọng sẽ giúp các kỹ sư và nhà nghiên cứu thiết kế các hệ thống MEC/RIS tương lai một cách thông minh hơn, đạt được hiệu quả cao mà vẫn đảm bảo được những yêu cầu QoS khắt khe của các ứng dụng thế hệ mới.

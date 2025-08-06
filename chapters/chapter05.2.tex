@@ -1,0 +1,10 @@
+\section{Chi phí năng lượng của các hoạt động điều khiển}
+
+\begin{itemize}
+    \item Năng lượng cho ước lượng kênh: tỉ lệ với độ dài pilot $L$ và số cấu hình $Q$. UE tiêu thụ $P_\text{UE}^\text{pilot} \cdot L (1+Q)$ (công suất pilot nhân thời gian) , RIS tiêu thụ $N P_\text{ele}$ trong thời gian đó . Nếu $Q$ lớn (RIS nhiều phần tử), đây là phần không nhỏ. Ví dụ, nếu mỗi pilot dùng 0.1 W, $L=1$ ms, $Q=50$ cấu hình, mỗi UE dùng 0.1*0.051=0.0051 J cho pilot mỗi slot, ước tính ~5 mJ. Với 10 UE, ~50 mJ, khá đáng kể nếu slot ngắn. Giảm $Q$ sẽ cắt giảm gần tỉ lệ.
+    \item Năng lượng cho tính toán RA: $E^\text{ES}\text{ctl} = C\text{RA} \cdot C (f_\text{ES})^2$ (coi CPU ES hoạt động ở điện áp cho trước). Nếu thuật toán phức tạp gấp đôi, $C_\text{RA}$ tăng gấp đôi, năng lượng tăng đôi. Tuy không trực tiếp ảnh hưởng UE, nhưng trong viễn cảnh MEC dùng server chạy bằng pin (như MEC di động gắn UAV) thì rất quan trọng.
+    \item Năng lượng cho signaling: AP phát ACK, SET-U, SET-R... thường công suất nhỏ (control channel công suất thấp hơn data). Nhưng nếu nhiều gói và dài, tổng cũng không bỏ qua được. RIS controller có thể tiêu thụ cỡ vài mW cho mỗi lần nhận lệnh.
+\end{itemize}
+
+
+Những chi phí này có thể ẩn khi đánh giá, nhưng để thiết kế tối ưu cần đưa chúng vào hàm mục tiêu. Một số nghiên cứu khác cũng đề cập việc định lượng chi phí tín hiệu điều khiển. Ví dụ, Anders Enqvist và cs. (2025) phân tích số bit tín hiệu phản hồi cần thiết cho RIS và ảnh hưởng của nó đến SNR, đề xuất mã hóa lượng tử hóa để giảm overhead điều khiển trong khi chỉ giảm SNR chút ít. Các hướng như vậy đều nhằm giảm năng lượng phần điều khiển mà vẫn duy trì hiệu năng cao.

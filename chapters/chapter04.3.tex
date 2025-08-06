@@ -1,0 +1,17 @@
+\section{Ảnh hưởng của overhead điều khiển đến tiêu thụ năng lượng}
+
+Overhead thời gian không chỉ ảnh hưởng trễ mà còn liên quan chặt chẽ đến năng lượng tiêu thụ .
+
+
+Thứ nhất, overhead càng lớn đồng nghĩa thiết bị và mạng phải hoạt động nhiều hơn cho việc điều khiển. Ví dụ, thời gian pilot dài hơn nghĩa là UE phát sóng liên tục lâu hơn, tiêu tốn nhiều năng lượng pin hơn . AP cũng phải phát nhiều tín hiệu điều khiển hơn, RIS duy trì hoạt động lâu hơn. Nếu overhead giảm, các thành phần có thể “nghỉ” sớm hơn để tiết kiệm năng lượng (tất nhiên phải cân bằng với hiệu năng).
+
+
+Thứ hai, overhead cao làm giảm thời gian truyền data, để gửi cùng lượng data trong ít thời gian hơn, UE có thể phải dùng công suất phát cao hơn. Công suất phát tăng làm tiêu hao năng lượng pin phi tuyến (công suất cao làm hiệu suất khuếch đại kém đi). Đồng thời, công suất phát cao hơn dễ gây nhiễu liên cell hơn (nếu có tái sử dụng tần số), gián tiếp ảnh hưởng năng lượng toàn mạng. Trong Fig.3, khi slot quá nhỏ (overhead chiếm nhiều), người ta quan sát công suất trung bình tăng và do đó năng lượng mỗi bit tăng.
+
+
+Thứ ba, overhead gồm phần tính toán thuật toán RA trên ES. Nếu thuật toán quá phức tạp, CPU ES phải chạy tần số cao (tăng $f$), theo công thức CMOS $E \propto f^2$, năng lượng ES tăng đáng kể . Năng lượng này dù không ảnh hưởng trực tiếp pin UE nhưng lại góp phần tiêu thụ điện của hạ tầng. Trong bối cảnh xanh hóa 6G, ta cũng cần giảm phần này. Vậy nên có quan điểm “tối ưu vừa đủ”: đôi khi giải một bài toán RA quá chính xác (tối ưu cận biên) không đáng, vì lợi ích năng lượng thu được nhỏ hơn năng lượng chính việc tính toán tiêu tốn.
+
+
+Bài báo gốc cũng xem xét năng lượng cho RA như một phần của hàm mục tiêu. Hệ số trọng số $w$ cho phép cân nhắc giữa việc giảm năng lượng UE (liên quan overhead pilot, công suất) và giảm năng lượng mạng (liên quan overhead tính toán, AP, RIS)  . Trong nhiều trường hợp, giảm năng lượng UE được ưu tiên hơn (vì UE hạn chế pin), do đó có thể chấp nhận tốn năng lượng mạng (vốn cấp nguồn tốt) để giảm tải cho UE. Ví dụ, AP/ES có thể tăng overhead tính toán (dùng CPU mạnh tính nhanh RA) để tìm cấu hình giúp UE truyền ít tốn pin nhất (thời gian truyền ngắn, công suất thấp) – đây là cách hy sinh năng lượng mạng đổi lấy năng lượng UE . Ngược lại, nếu mạng muốn tiết kiệm điện (ví dụ trạm 5G dùng pin năng lượng mặt trời), có thể giảm tần suất RA, chấp nhận UE tốn pin hơn chút, miễn sao duy trì QoS.
+
+Tóm lại, overhead điều khiển ảnh hưởng hai mặt: độ trễ và năng lượng. Thiết kế hệ thống MEC/RIS cần đặt mục tiêu tối ưu tổng thể, không chỉ tối đa tốc độ offload mà phải xét chi phí điều khiển đi kèm. Phần sau, chúng tôi sẽ đi sâu vào khía cạnh độ tin cậy: nếu overhead đã tối ưu mà kênh điều khiển lại gây lỗi, hiệu quả hệ thống sẽ ra sao.

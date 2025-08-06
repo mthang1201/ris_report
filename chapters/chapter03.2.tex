@@ -1,7 +1,22 @@
-\section{Giới thiệu về RIMEDO-TS}
-RIMEDO-TS được phát triển bởi dự án ONOS (Open Network Operating System), cung cấp môi trường mô phỏng chi tiết và linh hoạt cho các giải pháp quản lý tài nguyên mạng vô tuyến trong các tình huống thực tế như cân bằng tải, tối ưu hóa tài nguyên vô tuyến và quản lý chuyển giao thông minh giữa các trạm phát gốc (gNB). Bộ mô phỏng này bao gồm các module chính như:
+\section{Các kênh truyền dữ liệu và kênh điều khiển}
+
+Hệ thống gồm một kênh dữ liệu (Data Channel - DC) và ba kênh điều khiển (Control Channels - CC) phục vụ việc truyền dữ liệu và trao đổi tín hiệu điều khiển (Hình 3.1)
 \begin{itemize}
-    \item RAN Simulation Module: mô phỏng môi trường mạng vô tuyến với các nút mạng O-RAN như CU, DU, RU.
-    \item Near-Real-Time RIC Module: mô phỏng bộ điều khiển thông minh Near-RT RIC cho phép chạy các ứng dụng quản lý mạng vô tuyến theo thời gian thực gần (xApp).
-    \item xApp Framework: cung cấp các hàm API chuẩn hóa để phát triển, triển khai và đánh giá hiệu suất của các ứng dụng AI/DRL quản lý tài nguyên.
+    \item Kênh dữ liệu (DC): Mỗi UE $k$ truyền dữ liệu lên AP qua một kênh UL riêng tần số (do FDM) băng thông $B_k$. Kênh này bao gồm hai thành phần: kênh trực tiếp UE–AP (nếu có) ký hiệu $h_{\text{d},k}$ và kênh phản xạ qua RIS UE–RIS–AP ký hiệu $h_{\text{r},k}(\Phi(t))$ (phụ thuộc cấu hình $\Phi$ của RIS)
+. Tín hiệu tổng hợp tại AP là tổng hai thành phần trên. Công suất thu được và tốc độ dữ liệu của UE $k$ sẽ phụ thuộc vào cấu hình pha RIS $\Phi(t) = [\theta_1, \theta_2, ..., \theta_N]$ ($\theta_n$ là pha của phần tử $n$) cũng như vector beamforming tại AP.\cite{ris_latency}
+    \item Kênh điều khiển UE-CC: Đây là kênh điều khiển hai chiều giữa AP và các UE, gồm đường downlink (AP->UE) và uplink (UE->AP). Ta có thể liên hệ UE-CC với các kênh vật lý điều khiển của 5G như PDCCH/PUCCH
+\cite{ris_latency}
+. Kênh UE-CC dùng chung tần số với DC (in-band) và băng thông có thể trùng với $B_k$ hoặc một phần của nó
+. Nhờ RIS, các tín hiệu điều khiển DL từ AP có thể được RIS hỗ trợ (RIS chuyển sang cấu hình “phát rộng” (control configuration) để phủ tín hiệu điều khiển rộng tới các UE)
+. Kênh UE-CC sử dụng để truyền các bản tin điều khiển như: lịch phân tài nguyên, báo chất lượng kênh (CQI), tín hiệu ACK/NACK cho gói dữ liệu, v.v. từ AP đến UE, và các bản tin phản hồi trạng thái từ UE đến AP.
+    \item Kênh điều khiển RIS-CC: Đây là liên kết điều khiển từ AP đến RIS (thường downlink một chiều) để điều khiển hoạt động RIS. AP sẽ gửi các lệnh thiết lập cấu hình pha cho RIS, đồng bộ RIS với khung thời gian hệ thống. Kênh RIS-CC có thể thiết kế dưới dạng in-band (dùng cùng tần số với DC) hoặc sử dụng dải riêng (ví dụ tần số mmWave dành riêng cho điều khiển RIS). Trong phân tích ở bài báo gốc, các tác giả xem xét trường hợp in-band RIS-CC, nghĩa là tần số điều khiển RIS dùng chung với các kênh data, do đó việc truyền tín hiệu điều khiển tới RIS không thể đồng thời với truyền dữ liệu (phải chiếm thời gian riêng)
+\cite{ris_latency}
+. Tín hiệu điều khiển RIS-CC có dạng các gói lệnh do AP phát, ví dụ lệnh chuyển cấu hình, bắt đầu phiên đo kênh,...
+    \item Kênh điều khiển ES-CC: Đây là kênh kết nối giữa AP và máy chủ ES, thực chất qua đường backhaul nội bộ (AP và ES có thể đặt cùng chỗ). Ta giả định ES-CC là ngoài băng (out-of-band), tốc độ cao, đảm bảo tin cậy gần như tức thì
+\cite{ris_latency}
+. Giả định này có lý do: AP và ES thường kết nối bằng cáp quang hoặc bus nội bộ tốc độ cao, nên độ trễ và lỗi có thể bỏ qua. Kênh ES-CC dùng để AP và ES trao đổi thông tin điều phối, ví dụ AP chuyển báo cáo trạng thái UE nhận được sang ES, ES trả kết quả tính toán hoặc quyết định phân bổ tài nguyên về AP.
 \end{itemize}
+
+Tóm lại, so với hệ thống MEC truyền thống, hệ thống có RIS đòi hỏi thêm hai kênh điều khiển chuyên dụng (RIS-CC và UE-CC) bên cạnh kênh dữ liệu. Điều này dự báo phát sinh lượng lớn gói tín hiệu điều khiển cần trao đổi mỗi slot để đồng bộ hoạt động giữa các thành phần (UE, RIS, AP, ES). Thiết kế các kênh CC này có thể in-band hoặc out-of-band, mỗi lựa chọn có ưu nhược: in-band thì tận dụng chung hạ tầng nhưng cạnh tranh tài nguyên với data; out-of-band thì không ảnh hưởng data nhưng đòi hỏi phổ riêng (đắt đỏ)
+\cite{mec}
+. Trong bài báo gốc, hai kênh quan trọng UE-CC và RIS-CC được xét in-band nên overhead thời gian của chúng ảnh hưởng trực tiếp đến thời gian truyền data.

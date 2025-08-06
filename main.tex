@@ -23,8 +23,9 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{courier}
-
-
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
 \usepackage{biblatex}
 \addbibresource{refs.bib}
 
@@ -49,7 +50,7 @@
 }
 
 \chapter*{Lời cam đoan}
-Nhóm em xin cam đoan: Báo cáo nghiên cứu khoa học với đề tài “Mô phỏng điều hướng lưu lượng trong O-RAN với xApp dùng Deep Reinforcement Learning” này là của nhóm em. Những gì nhóm em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu tập thể nhóm em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, nhóm em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
+Nhóm em xin cam đoan: Báo cáo nghiên cứu khoa học với đề tài “Các Khía Cạnh Điều Khiển trong Hệ Thống MEC Hỗ Trợ bởi RIS cho Ứng Dụng Độ Trễ Nghiêm Ngặt” này là của nhóm em. Những gì nhóm em viết ra không có sự sao chép từ các tài liệu, không sử dụng kết quả của người khác mà không trích dẫn cụ thể. Đây là công trình nghiên cứu tập thể nhóm em tự phát triển, không sao chép mã nguồn của người khác. Nếu vi phạm những điều trên, nhóm em xin chấp nhận tất cả những truy cứu về trách nhiệm theo quy định.
 
 \vspace{2cm} % nếu cần tạo khoảng cách từ nội dung phía trên
 \noindent
@@ -73,9 +74,10 @@ Bên cạnh đó, em xin được bày tỏ lòng biết ơn tới các thầy c
 Cuối cùng, em xin chúc các thầy cô, các bạn luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong cuộc sống.
 
 \chapter*{Tóm tắt}
-Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp trong kiến trúc Open RAN, tập trung vào việc điều hướng lưu lượng mạng sử dụng Deep Reinforcement Learning (DRL). Chúng tôi đã xây dựng một xApp để tối ưu hóa việc phân phối lưu lượng mạng trong môi trường O-RAN, sử dụng mô hình DRL để cải thiện hiệu suất mạng. Bằng cách sử dụng mô phỏng ns-3, chúng tôi đã kiểm tra hiệu quả của xApp trong các tình huống thực tế, cho thấy khả năng cải thiện đáng kể trong việc quản lý lưu lượng và tối ưu hóa tài nguyên mạng. Báo cáo cũng cung cấp hướng dẫn chi tiết về cách phát triển xApp và tích hợp nó vào hệ thống O-RAN.
+Hệ thống tính toán biên di động (Mobile Edge Computing - MEC) kết hợp với các bề mặt thông minh có thể tái cấu hình (Reconfigurable Intelligent Surfaces - RIS) nổi lên như một giải pháp tiềm năng để đáp ứng yêu cầu độ trễ cực thấp của các ứng dụng tương lai (như IoT, điều khiển công nghiệp, xe tự hành). Báo cáo này tập trung phân tích các khía cạnh điều khiển – bao gồm việc ước lượng kênh (CE), phân bổ tài nguyên (RA) và tín hiệu điều khiển – trong hệ thống MEC có hỗ trợ RIS, đặc biệt nhấn mạnh vai trò của overhead điều khiển đối với hiệu năng và độ trễ end-to-end. Trong các hệ thống này, việc đầu tư nhiều tài nguyên cho điều khiển sẽ nâng cao độ tin cậy (ví dụ ước lượng kênh chính xác hơn, phân bổ tài nguyên tối ưu hơn), nhưng đồng thời giảm quỹ thời gian và tài nguyên dành cho truyền dữ liệu, có thể tăng độ trễ tổng thể. Ngược lại, giảm overhead điều khiển giúp dành nhiều thời gian hơn để offload dữ liệu, nhưng có thể làm giảm chất lượng CSI và độ linh hoạt trong RA
+. Báo cáo xây dựng một khung phân tích tác động của các tác vụ điều khiển này đến hiệu năng hệ thống MEC/RIS, làm rõ sự đánh đổi giữa hiệu năng và độ trễ thông qua phân tích lý thuyết và kết quả mô phỏng từ bài báo gốc \cite{ris_latency}. Các yếu tố như thời gian overhead, chi phí năng lượng cho điều khiển, và ảnh hưởng của lỗi điều khiển (do kênh điều khiển không hoàn hảo) được xem xét sâu sắc. Ngoài ra, báo cáo so sánh giữa RIS thụ động vs. RIS chủ động trong bối cảnh MEC: RIS chủ động có thể cải thiện hiệu năng nhờ khuếch đại tín hiệu nhưng đòi hỏi năng lượng và phức tạp cao hơn, trong khi RIS thụ động tiết kiệm năng lượng nhưng chịu suy hao kênh kép lớn. Cuối cùng, chúng tôi tổng hợp các hướng nghiên cứu mới nhằm giảm overhead điều khiển (như thuật toán ước lượng kênh hiệu quả, phân bổ tài nguyên bền vững với lỗi, điều khiển hai thang thời gian, v.v.) và đề xuất một số cải tiến tương lai để tối ưu hóa hơn nữa sự tích hợp RIS trong MEC cho các ứng dụng có độ trễ nghiêm ngặt.
 
-\textbf{Từ khoá:} Open RAN architecture, O-RAN RIC, xApp development, O-RAN use cases, ns-3 O-RAN simulation, DRL for traffic steering, RAN Intelligent Controller.
+\textbf{Từ khoá:} MEC, RIS, tính toán biên di động, độ trễ đầu-cuối, điều khiển kênh, overhead điều khiển, ước lượng kênh (CE), phân bổ tài nguyên (RA), RIS chủ động, RIS thụ động.
 
 \tableofcontents
 
@@ -86,10 +88,10 @@ Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp 
 % % \chapter*{Thuật ngữ}
 
 
-\chapter{Đặt vấn đề}
+\chapter{Giới thiệu}
 \input{chapters/chapter01}
 
-\chapter{Kiến thức cơ sở}
+\chapter{Tổng quan về MEC và RIS trong mạng 5G/6G}
 \input{chapters/chapter02.1}
 \input{chapters/chapter02.2}
 \input{chapters/chapter02.3}
@@ -97,16 +99,37 @@ Báo cáo này trình bày quá trình phát triển và mô phỏng một xApp 
 % \chapter{Phương pháp tối ưu hoá ABR}
 % \input{chapters/chapter03}
 
-\chapter{Cài đặt phương pháp và thực nghiệm}
+\chapter{Mô hình hệ thống MEC hỗ trợ RIS và các kênh điều khiển}
 \input{chapters/chapter03.1}
 \input{chapters/chapter03.2}
 \input{chapters/chapter03.3}
 \input{chapters/chapter03.4}
 
 
-\chapter{Kết luận}
-\input{chapters/chapter05}
+\chapter{Overhead thời gian cho điều khiển trong MEC/RIS}
+\input{chapters/chapter04.1}
+\input{chapters/chapter04.2}
+\input{chapters/chapter04.3}
 
+\chapter{Đánh đổi hiệu năng và độ trễ dưới tác động của overhead}
+Như phân tích ở trên, việc tăng/giảm overhead điều khiển dẫn đến đánh đổi (trade-off) giữa hiệu năng đạt được (thông lượng, năng lượng) và độ trễ. Trong phần này, chúng tôi tổng hợp một số góc nhìn về sự đánh đổi này dựa trên kết quả mô phỏng cũng như lý thuyết.
+
+
+\input{chapters/chapter05.1}
+\input{chapters/chapter05.2}
+\input{chapters/chapter05.3}
+
+
+\chapter{Tác động của lỗi điều khiển và độ tin cậy kênh điều khiển}
+Trong các phần trước, chúng tôi giả định ngầm rằng các tín hiệu điều khiển (pilot, gói INI, SET...) được trao đổi thành công 100 phần trăm và kênh ước lượng chính xác. Thực tế, kênh điều khiển cũng chịu lỗi (nhiễu, fading) và quá trình ước lượng kênh có sai số. Những lỗi điều khiển này sẽ ảnh hưởng trực tiếp đến các quyết định trong hệ thống MEC/RIS, nếu không được tính đến thì hiệu năng thực tế có thể kém xa so với tính toán lý thuyết.
+
+
+\input{chapters/chapter06.1}
+\input{chapters/chapter06.2}
+\input{chapters/chapter06.3}    
+
+\chapter{Kết luận}
+\input{chapters/chapter07}
 % \chapter*{Tài liệu tham khảo}
 % \input{chapters/references}
 

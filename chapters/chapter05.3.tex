@@ -1,0 +1,14 @@
+\section{Tối ưu hóa phân bổ tài nguyên vs. chi phí tính toán (RA algorithm)}
+
+Nói riêng về thuật toán RA, đây là thành phần đặc trưng của MEC/RIS. Thuật toán RA quyết định hiệu năng nhưng đồng thời tạo overhead tính toán. Do đó có sự đánh đổi giữa:
+
+\begin{itemize}
+    \item Thuật toán chính xác cao (optimal): đạt hiệu năng tối đa (ví dụ thông lượng cao nhất, năng lượng tiêu thụ ít nhất), nhưng thời gian chạy dài, có thể vượt quá slot nếu không cẩn thận, hoặc tiêu hao nhiều CPU -> không phù hợp thời gian thực.
+    \item Thuật toán xấp xỉ/heuristic nhanh: cho kết quả gần tối ưu, chạy nhanh (vài ms), overhead nhỏ, nhưng hiệu năng có thể thấp hơn ngưỡng yêu cầu.
+\end{itemize}
+
+Lựa chọn thuật toán tùy thuộc mục tiêu hệ thống: nếu yêu cầu độ trễ nghiêm ngặt và hệ thống thay đổi nhanh, cần thuật toán rất nhanh, chấp nhận suboptimal. Ngược lại nếu kênh ít thay đổi và cần vắt kiệt hiệu năng, có thể chạy thuật toán kỹ hơn.
+
+Bài báo gốc chọn thuật toán tham lam (greedy) để giảm độ phức tạp . Họ cũng giới hạn việc tối ưu RIS theo nhóm thay vì từng phần tử để giảm $C_\text{RA}$ . Kết quả, overhead RA (tính bằng ms) giảm nhiều so với nếu thử hết $2^{Nb}$ khả năng.
+
+Một xu hướng mới là dùng học máy/học sâu để làm RA: mạng neural có thể được huấn luyện để gần như trực tiếp dự đoán cấu hình tối ưu từ CSI, thay vì giải tối ưu lặp. Điều này có thể giảm thời gian tính toán khi triển khai (suy luận mạng neural rất nhanh trên GPU), nhưng đánh đổi là cần dữ liệu huấn luyện và có sai số. Tuy nhiên, nếu sai số nhỏ chấp nhận được, đây là cách giảm overhead RA rất hứa hẹn. Một số nghiên cứu RIS gợi ý hướng này.

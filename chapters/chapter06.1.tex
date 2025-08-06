@@ -1,0 +1,11 @@
+\section{Lỗi ước lượng kênh (CE) và hệ quả đến thông lượng}
+
+Ước lượng kênh sai (CSI error) xảy ra do pilot nhiễu, do mô hình chưa đủ, hoặc do thời gian giữa pilot và truyền data kênh đã đổi (quá hạn). Lỗi CSI nghĩa là AP và ES không biết chính xác gain kênh. Khi đó, quyết định RA có thể không phù hợp thực tế: ví dụ, giả sử AP nghĩ kênh UE tốt hơn thực tế → ES sẽ đặt tốc độ truyền quá cao (MCS quá lớn) cho UE, hoặc giảm công suất UE vì nghĩ không cần cao -> kết quả UE truyền không đạt throughput yêu cầu, có thể mất một phần hoặc toàn bộ gói data (giải mã thất bại do chọn MCS vượt SNR thực). Ngược lại, nếu AP đánh giá kênh xấu hơn thực → ES có thể cho MCS quá thận trọng hoặc công suất quá cao -> lãng phí tài nguyên và năng lượng, mặc dù dữ liệu vẫn tới đích.
+
+
+Trường hợp xấu nhất của lỗi CE: UE truyền với tốc độ danh định cao hơn dung lượng kênh thực, dẫn đến toàn bộ gói payload mất trong slot đó. Điều này tương đương trễ tăng thêm một slot (phải chờ retransmit) hoặc thậm chí mất gói nếu không có HARQ. Bài báo định nghĩa thông lượng danh định theo CSI ước lượng (công thức (14)), và thông lượng thực tế giảm khi có lỗi CE khiến danh định vượt quá capacity . Từ Proposition 1, nếu dùng phương pháp ước lượng Least Squares (LS) với pilot lặp $L$ lần, trong kênh Rayleigh, phương sai lỗi ước lượng có thể tính được: nó tỉ lệ nghịch với $L$ (pilot dài hơn -> lỗi nhỏ)  . Do đó, một cách giảm lỗi CE là tăng độ dài pilot hoặc công suất pilot, nhưng lại tăng overhead.
+
+
+Thay vì tăng pilot, cũng có thể dùng thuật toán ước lượng tốt hơn (MMSE, Bayesian) nếu có thông tin prior, giúp giảm lỗi ở cùng $L$. Tuy nhiên, dù sao sai số khác 0 vẫn tồn tại. Hướng khác: thiết kế RA robust với lỗi CSI – tức thay vì tối ưu dựa trên CSI ước lượng như thật, ES có thể tối ưu theo kiểu "worst-case" hoặc "đặt margin" cho an toàn. Ví dụ, nếu kênh ước lượng SNR = 20 dB, ES có thể chọn MCS ứng với 15 dB thôi để dằn sai số. Cách này giảm rủi ro mất gói do CSI sai, nhưng đánh đổi throughput khi CSI đúng.
+
+Tóm lại, lỗi CE có thể làm giảm thông lượng thực so với tính toán, thậm chí làm mất ổn định hàng đợi nếu hệ thống không phát hiện để bù đắp. Vì vậy, các giải pháp MEC/RIS cần kết hợp kỹ thuật kiểm soát lỗi – ví dụ ARQ/HARQ để phục hồi khi gói payload mất do CSI sai.
